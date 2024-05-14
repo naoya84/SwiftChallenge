@@ -31,7 +31,7 @@ struct VariousAPIListApp: App {
     func destination(_ appPath: AppPath) -> some View {
         switch appPath {
         case .album:
-            AlbumListPageView()
+            AlbumListPageView(viewModel: .init())
         case .photo:
             PhotoListPageView()
         }
