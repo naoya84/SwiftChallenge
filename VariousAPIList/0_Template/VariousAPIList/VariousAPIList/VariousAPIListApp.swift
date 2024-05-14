@@ -33,7 +33,7 @@ struct VariousAPIListApp: App {
         case .album:
             AlbumListPageView(viewModel: .init())
         case .photo:
-            PhotoListPageView()
+            PhotoListPageView(viewModel: .init())
         }
     }
 }
