@@ -7,8 +7,15 @@
 
 import Foundation
 
-struct Album: Codable {
+struct Album: Codable, Hashable, Identifiable {
     var userId: Int64
     var id: Int64
     var title: String
+    
+    static func make()->[Album]{
+        return [
+            Album(userId: 1, id: 1, title: "dummy1"),
+            Album(userId: 1, id: 2, title: "dummy2")
+        ]
+    }
 }

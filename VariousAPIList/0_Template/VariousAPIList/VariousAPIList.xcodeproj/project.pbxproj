@@ -18,6 +18,12 @@
 		8C4C06E62BED987A00A59916 /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4C06E32BED987A00A59916 /* Album.swift */; };
 		8C4C06E72BED987A00A59916 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4C06E42BED987A00A59916 /* Photo.swift */; };
 		8C4C06E92BED9F6D00A59916 /* VariousAPIListApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4C06E82BED9F6D00A59916 /* VariousAPIListApp.swift */; };
+		CE192BBA2BF39E94002340B0 /* PhotoListPageViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE192BB92BF39E94002340B0 /* PhotoListPageViewTests.swift */; };
+		CE192BBD2BF3A5C5002340B0 /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = CE192BBC2BF3A5C5002340B0 /* Nimble */; };
+		CE192BBF2BF3A5C9002340B0 /* ViewInspector in Frameworks */ = {isa = PBXBuildFile; productRef = CE192BBE2BF3A5C9002340B0 /* ViewInspector */; };
+		CE192BC12BF3A5CE002340B0 /* ViewInspector in Frameworks */ = {isa = PBXBuildFile; productRef = CE192BC02BF3A5CE002340B0 /* ViewInspector */; };
+		CE192BC32BF3A5D2002340B0 /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = CE192BC22BF3A5D2002340B0 /* Nimble */; };
+		CE192BC52BF3A6DD002340B0 /* AlbumListPageViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE192BC42BF3A6DD002340B0 /* AlbumListPageViewTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +59,8 @@
 		8C4C06E32BED987A00A59916 /* Album.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
 		8C4C06E42BED987A00A59916 /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		8C4C06E82BED9F6D00A59916 /* VariousAPIListApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariousAPIListApp.swift; sourceTree = "<group>"; };
+		CE192BB92BF39E94002340B0 /* PhotoListPageViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoListPageViewTests.swift; sourceTree = "<group>"; };
+		CE192BC42BF3A6DD002340B0 /* AlbumListPageViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumListPageViewTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +75,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE192BBD2BF3A5C5002340B0 /* Nimble in Frameworks */,
+				CE192BBF2BF3A5C9002340B0 /* ViewInspector in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,6 +84,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE192BC12BF3A5CE002340B0 /* ViewInspector in Frameworks */,
+				CE192BC32BF3A5D2002340B0 /* Nimble in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,6 +99,7 @@
 				8C4C06C02BED982700A59916 /* VariousAPIListTests */,
 				8C4C06CA2BED982700A59916 /* VariousAPIListUITests */,
 				8C4C06AD2BED982500A59916 /* Products */,
+				CE192BBB2BF3A5C5002340B0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -125,6 +138,8 @@
 			isa = PBXGroup;
 			children = (
 				8C4C06C12BED982700A59916 /* VariousAPIListTests.swift */,
+				CE192BB92BF39E94002340B0 /* PhotoListPageViewTests.swift */,
+				CE192BC42BF3A6DD002340B0 /* AlbumListPageViewTests.swift */,
 			);
 			path = VariousAPIListTests;
 			sourceTree = "<group>";
@@ -155,6 +170,13 @@
 				8C4C06E42BED987A00A59916 /* Photo.swift */,
 			);
 			path = Entity;
+			sourceTree = "<group>";
+		};
+		CE192BBB2BF3A5C5002340B0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -191,6 +213,10 @@
 				8C4C06BF2BED982700A59916 /* PBXTargetDependency */,
 			);
 			name = VariousAPIListTests;
+			packageProductDependencies = (
+				CE192BBC2BF3A5C5002340B0 /* Nimble */,
+				CE192BBE2BF3A5C9002340B0 /* ViewInspector */,
+			);
 			productName = VariousAPIListTests;
 			productReference = 8C4C06BD2BED982700A59916 /* VariousAPIListTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -209,6 +235,10 @@
 				8C4C06C92BED982700A59916 /* PBXTargetDependency */,
 			);
 			name = VariousAPIListUITests;
+			packageProductDependencies = (
+				CE192BC02BF3A5CE002340B0 /* ViewInspector */,
+				CE192BC22BF3A5D2002340B0 /* Nimble */,
+			);
 			productName = VariousAPIListUITests;
 			productReference = 8C4C06C72BED982700A59916 /* VariousAPIListUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -245,6 +275,10 @@
 				Base,
 			);
 			mainGroup = 8C4C06A32BED982500A59916;
+			packageReferences = (
+				CE192BB62BF399F6002340B0 /* XCRemoteSwiftPackageReference "ViewInspector" */,
+				CE192BB82BF39CF9002340B0 /* XCRemoteSwiftPackageReference "Nimble" */,
+			);
 			productRefGroup = 8C4C06AD2BED982500A59916 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -300,7 +334,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE192BBA2BF39E94002340B0 /* PhotoListPageViewTests.swift in Sources */,
 				8C4C06C22BED982700A59916 /* VariousAPIListTests.swift in Sources */,
+				CE192BC52BF3A6DD002340B0 /* AlbumListPageViewTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -649,6 +685,48 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CE192BB62BF399F6002340B0 /* XCRemoteSwiftPackageReference "ViewInspector" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nalexn/ViewInspector";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.11;
+			};
+		};
+		CE192BB82BF39CF9002340B0 /* XCRemoteSwiftPackageReference "Nimble" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Quick/Nimble.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 13.1.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CE192BBC2BF3A5C5002340B0 /* Nimble */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE192BB82BF39CF9002340B0 /* XCRemoteSwiftPackageReference "Nimble" */;
+			productName = Nimble;
+		};
+		CE192BBE2BF3A5C9002340B0 /* ViewInspector */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE192BB62BF399F6002340B0 /* XCRemoteSwiftPackageReference "ViewInspector" */;
+			productName = ViewInspector;
+		};
+		CE192BC02BF3A5CE002340B0 /* ViewInspector */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE192BB62BF399F6002340B0 /* XCRemoteSwiftPackageReference "ViewInspector" */;
+			productName = ViewInspector;
+		};
+		CE192BC22BF3A5D2002340B0 /* Nimble */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE192BB82BF39CF9002340B0 /* XCRemoteSwiftPackageReference "Nimble" */;
+			productName = Nimble;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 8C4C06A42BED982500A59916 /* Project object */;
 }

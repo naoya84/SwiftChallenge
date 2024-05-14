@@ -8,8 +8,17 @@
 import SwiftUI
 
 struct AlbumListPageView: View {
+    let albumList: [Album] = Album.make()
+    
     var body: some View {
         Text("AlbumListPageView!")
+        List(albumList) {album in
+            VStack{
+                Text("id: \(album.id)")
+                Text("userId: \(album.userId)")
+                Text("title: \(album.title)")
+            }
+        }
     }
 }
 
