@@ -24,6 +24,7 @@
 		CE192BC12BF3A5CE002340B0 /* ViewInspector in Frameworks */ = {isa = PBXBuildFile; productRef = CE192BC02BF3A5CE002340B0 /* ViewInspector */; };
 		CE192BC32BF3A5D2002340B0 /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = CE192BC22BF3A5D2002340B0 /* Nimble */; };
 		CE192BC52BF3A6DD002340B0 /* AlbumListPageViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE192BC42BF3A6DD002340B0 /* AlbumListPageViewTests.swift */; };
+		CEB84F6B2BF4E319007123BE /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB84F6A2BF4E319007123BE /* APIClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		8C4C06E82BED9F6D00A59916 /* VariousAPIListApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariousAPIListApp.swift; sourceTree = "<group>"; };
 		CE192BB92BF39E94002340B0 /* PhotoListPageViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoListPageViewTests.swift; sourceTree = "<group>"; };
 		CE192BC42BF3A6DD002340B0 /* AlbumListPageViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumListPageViewTests.swift; sourceTree = "<group>"; };
+		CEB84F6A2BF4E319007123BE /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				8C4C06E82BED9F6D00A59916 /* VariousAPIListApp.swift */,
+				CEB84F692BF4E2F3007123BE /* API */,
 				8C4C06E52BED987A00A59916 /* Entity */,
 				8C4C06DA2BED983E00A59916 /* View */,
 				8C4C06B32BED982700A59916 /* Assets.xcassets */,
@@ -177,6 +180,14 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CEB84F692BF4E2F3007123BE /* API */ = {
+			isa = PBXGroup;
+			children = (
+				CEB84F6A2BF4E319007123BE /* APIClient.swift */,
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -322,6 +333,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8C4C06E72BED987A00A59916 /* Photo.swift in Sources */,
+				CEB84F6B2BF4E319007123BE /* APIClient.swift in Sources */,
 				8C4C06DF2BED986000A59916 /* PhotoListPageView.swift in Sources */,
 				8C4C06E02BED986000A59916 /* TopPageView.swift in Sources */,
 				8C4C06E92BED9F6D00A59916 /* VariousAPIListApp.swift in Sources */,

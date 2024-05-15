@@ -34,14 +34,35 @@ struct AlbumListPageView: View {
 
 extension AlbumListPageView {
     class ViewModel: ObservableObject {
+//        問2:
+//        func getAlbumList() async -> [Album] {
+//            let requestUrl = URL(string: "https://jsonplaceholder.typicode.com/albums")!
+//            let request = URLRequest(url: requestUrl)
+//            let result = try! await URLSession.shared.data(for: request)
+//            // .decodeメソッドには、型名とデコードするData型を指定。
+//            let json = try! JSONDecoder().decode([Album].self, from: result.0)
+//
+//            return json
+//        }
+        
+        let apiClient = APIClientImpl()
+        
         func getAlbumList() async -> [Album] {
-            let requestUrl = URL(string: "https://jsonplaceholder.typicode.com/albums")!
-            let request = URLRequest(url: requestUrl)
-            let result = try! await URLSession.shared.data(for: request)
-            // .decodeメソッドには、型名とデコードするData型を指定。
-            let json = try! JSONDecoder().decode([Album].self, from: result.0)
-
-            return json
+            let request = GetAlbumsRequest()
+            var result: [Album] = []
+            do {
+                result = try await apiClient.executeWithCompletion(request) { response, error in
+                    if let response = response {
+                        print(response)
+                    } else if let error {
+                        print(error)
+                    }
+                }
+            } catch {
+                print(error)
+            }
+            
+            return result
         }
     }
 }
