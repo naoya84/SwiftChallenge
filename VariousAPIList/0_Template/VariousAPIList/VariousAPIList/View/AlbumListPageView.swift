@@ -53,7 +53,7 @@ extension AlbumListPageView {
             do {
                 result = try await apiClient.executeWithCompletion(request) { response, error in
                     if let response = response {
-                        print(response)
+//                        print(response)
                     } else if let error {
                         print(error)
                     }

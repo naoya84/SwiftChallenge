@@ -34,14 +34,24 @@ struct PhotoListPageView: View {
 
 extension PhotoListPageView {
     class ViewModel: ObservableObject {
+        let apiClient = APIClientImpl()
+        
         func getPhotoList() async -> [Photo] {
-            let requestUrl = URL(string: "https://jsonplaceholder.typicode.com/photos?albumId=1")!
-            let request = URLRequest(url: requestUrl)
-            let result = try! await URLSession.shared.data(for: request)
-            // .decodeメソッドには、型名とデコードするData型を指定。
-            let json = try! JSONDecoder().decode([Photo].self, from: result.0)
-
-            return json
+            let request = GetPhotosRequest()
+            var result: [Photo] = []
+            
+            do {
+                result = try await apiClient.executeWithCompletion(request) { response, error in
+                    if let response = response {
+//                        print(response)
+                    } else if let error {
+                        print(error)
+                    }
+                }
+            } catch {
+                print(error)
+            }
+            return result
         }
     }
 }

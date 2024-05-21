@@ -19,15 +19,7 @@ protocol APIRequest {
     var headers: [String: String] { get }
     var baseURL: URL? { get }
     var parameters: [String: String] { get }
-}
-
-extension APIRequest {
-    var url: URL {
-        var urlComponent = URLComponents(url: baseURL!, resolvingAgainstBaseURL: true)!
-        urlComponent.path = endpoint
-
-        return urlComponent.url!
-    }
+    var url: URL {get}
 }
 
 struct GetAlbumsRequest: APIRequest {
@@ -43,12 +35,18 @@ struct GetAlbumsRequest: APIRequest {
     
     var parameters: [String : String] = ["":""]
     
+    var url: URL {
+        var urlComponent = URLComponents(url: baseURL!, resolvingAgainstBaseURL: true)!
+        urlComponent.path = endpoint
+
+        return urlComponent.url!
+    }
 }
 
 struct GetPhotosRequest: APIRequest {
     typealias ResponseType = [Photo]
     
-    var endpoint: String = "/photos?albumId=1"
+    var endpoint: String = "/photos"
     
     var method: HttpMethod = .GET
     
@@ -57,6 +55,14 @@ struct GetPhotosRequest: APIRequest {
     var baseURL: URL? = URL(string: "https://jsonplaceholder.typicode.com")
     
     var parameters: [String : String] = ["":""]
+    
+    var url: URL {
+        var urlComponent = URLComponents(url: baseURL!, resolvingAgainstBaseURL: true)!
+        urlComponent.path = endpoint
+        urlComponent.queryItems = [URLQueryItem(name: "albumId", value: "1")]
+
+        return urlComponent.url!
+    }
 }
 
 protocol APIClient {
@@ -66,11 +72,13 @@ protocol APIClient {
 class APIClientImpl: APIClient {
     
     func executeWithCompletion<T>(_ request: T, completion: @escaping (T.ResponseType?, (any Error)?) -> Void) async throws -> T.ResponseType where T: APIRequest {
-        // TODO: ここを実装する
         let requestUrl = request.url
-        let getRequest = URLRequest(url: requestUrl)
+        var getRequest = URLRequest(url: requestUrl)
+        if let contentType = request.headers["Content-Type"] {
+            getRequest.setValue(contentType, forHTTPHeaderField: "Content-Type")
+        }
 
-        let (data, error) = try await URLSession.shared.data(for: getRequest)
+        let (data, _) = try! await URLSession.shared.data(for: getRequest)
         let result = try! JSONDecoder().decode(T.ResponseType.self, from: data)
         completion(result,nil)
         return result
