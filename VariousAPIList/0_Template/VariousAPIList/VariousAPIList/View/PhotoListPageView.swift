@@ -12,12 +12,11 @@ import SwiftUI
 struct PhotoListPageView: View {
     @StateObject var viewModel: ViewModel
     @State var photoList: [Photo] = []
-//    let photoList: [Photo] = Photo.make()
     
     var body: some View {
         Text("PhotoListPageView!")
-        List(photoList) {photo in
-            VStack{
+        List {
+            ForEach(photoList, id: \.self) { photo in
                 AsyncImage(url: photo.thumbnailUrl)
                 Text("id: \(photo.id)")
                 Text("albumId: \(photo.albumId)")
@@ -34,24 +33,22 @@ struct PhotoListPageView: View {
 
 extension PhotoListPageView {
     class ViewModel: ObservableObject {
-        let apiClient = APIClientImpl()
-        
+        let apiClient = APIClientImpl(
+            defaultBaseURL: URL(string: "https://jsonplaceholder.typicode.com")!
+        )
+                
         func getPhotoList() async -> [Photo] {
-            let request = GetPhotosRequest()
-            var result: [Photo] = []
-            
-            do {
-                result = try await apiClient.executeWithCompletion(request) { response, error in
+            let request = GetPhotosRequest(parameters: ["albumId" : "1"])
+            return await withCheckedContinuation { continuation in
+                apiClient.executeWithCompletion(request) { response, error in
                     if let response = response {
-//                        print(response)
+                        continuation.resume(returning: response)
                     } else if let error {
                         print(error)
+                        continuation.resume(returning: [])
                     }
                 }
-            } catch {
-                print(error)
             }
-            return result
         }
     }
 }

@@ -12,13 +12,11 @@ import SwiftUI
 struct AlbumListPageView: View {
     @StateObject var viewModel: ViewModel
     @State var albumList: [Album] = []
-//    let albumList: [Album] = Album.make()
-
         
     var body: some View {
         Text("AlbumListPageView!")
-        List(albumList) {album in
-            VStack{
+        List {
+            ForEach(albumList, id: \.self) { album in
                 Text("id: \(album.id)")
                 Text("userId: \(album.userId)")
                 Text("title: \(album.title)")
@@ -34,35 +32,24 @@ struct AlbumListPageView: View {
 
 extension AlbumListPageView {
     class ViewModel: ObservableObject {
-//        問2:
-//        func getAlbumList() async -> [Album] {
-//            let requestUrl = URL(string: "https://jsonplaceholder.typicode.com/albums")!
-//            let request = URLRequest(url: requestUrl)
-//            let result = try! await URLSession.shared.data(for: request)
-//            // .decodeメソッドには、型名とデコードするData型を指定。
-//            let json = try! JSONDecoder().decode([Album].self, from: result.0)
-//
-//            return json
-//        }
         
-        let apiClient = APIClientImpl()
+        let apiClient = APIClientImpl(
+            defaultBaseURL: URL(string: "https://jsonplaceholder.typicode.com")!
+        )
         
         func getAlbumList() async -> [Album] {
             let request = GetAlbumsRequest()
-            var result: [Album] = []
-            do {
-                result = try await apiClient.executeWithCompletion(request) { response, error in
+            
+            return await withCheckedContinuation { continuation in
+                apiClient.executeWithCompletion(request) { response, error in
                     if let response = response {
-//                        print(response)
+                        continuation.resume(returning: response)
                     } else if let error {
                         print(error)
+                        continuation.resume(returning: [])
                     }
                 }
-            } catch {
-                print(error)
             }
-            
-            return result
         }
     }
 }

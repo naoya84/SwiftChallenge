@@ -1,10 +1,3 @@
-//
-//  APIClient.swift
-//  VariousAPIList
-//
-//  Created by naoya on 2024/05/15.
-//
-
 import Foundation
 
 enum HttpMethod: String {
@@ -19,7 +12,6 @@ protocol APIRequest {
     var headers: [String: String] { get }
     var baseURL: URL? { get }
     var parameters: [String: String] { get }
-    var url: URL {get}
 }
 
 struct GetAlbumsRequest: APIRequest {
@@ -31,16 +23,9 @@ struct GetAlbumsRequest: APIRequest {
     
     var headers: [String : String] = ["Content-Type": "application/json"]
     
-    var baseURL: URL? = URL(string: "https://jsonplaceholder.typicode.com")
+    var baseURL: URL?
     
-    var parameters: [String : String] = ["":""]
-    
-    var url: URL {
-        var urlComponent = URLComponents(url: baseURL!, resolvingAgainstBaseURL: true)!
-        urlComponent.path = endpoint
-
-        return urlComponent.url!
-    }
+    var parameters: [String : String] = [String:String]()
 }
 
 struct GetPhotosRequest: APIRequest {
@@ -52,35 +37,72 @@ struct GetPhotosRequest: APIRequest {
     
     var headers: [String : String] = ["Content-Type": "application/json"]
     
-    var baseURL: URL? = URL(string: "https://jsonplaceholder.typicode.com")
+    var baseURL: URL?
     
-    var parameters: [String : String] = ["":""]
-    
-    var url: URL {
-        var urlComponent = URLComponents(url: baseURL!, resolvingAgainstBaseURL: true)!
-        urlComponent.path = endpoint
-        urlComponent.queryItems = [URLQueryItem(name: "albumId", value: "1")]
-
-        return urlComponent.url!
-    }
+    var parameters: [String : String] = [String:String]()
 }
 
+
 protocol APIClient {
-    func executeWithCompletion<T: APIRequest>(_ request: T, completion: @escaping (T.ResponseType?, Error?) -> Void) async throws -> T.ResponseType
+    var defaultBaseURL: URL { get }
+    
+    func executeWithCompletion<T: APIRequest>(_ request: T, completion: @escaping (T.ResponseType?, Error?) -> Void)
 }
 
 class APIClientImpl: APIClient {
+    let defaultBaseURL: URL
     
-    func executeWithCompletion<T>(_ request: T, completion: @escaping (T.ResponseType?, (any Error)?) -> Void) async throws -> T.ResponseType where T: APIRequest {
-        let requestUrl = request.url
-        var getRequest = URLRequest(url: requestUrl)
-        if let contentType = request.headers["Content-Type"] {
-            getRequest.setValue(contentType, forHTTPHeaderField: "Content-Type")
+    init(defaultBaseURL: URL) {
+        self.defaultBaseURL = defaultBaseURL
+    }
+    
+    
+    private func makeURL(with request: any APIRequest) -> URL {
+        var urlComponent = URLComponents()
+        if let baseURL = request.baseURL {
+            urlComponent = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)!
+        } else {
+            urlComponent = URLComponents(url: defaultBaseURL, resolvingAgainstBaseURL: true)!
         }
-
-        let (data, _) = try! await URLSession.shared.data(for: getRequest)
-        let result = try! JSONDecoder().decode(T.ResponseType.self, from: data)
-        completion(result,nil)
-        return result
+        urlComponent.path = request.endpoint
+        
+        var queryItems: [URLQueryItem] = []
+        for param in request.parameters {
+            queryItems.append(
+                URLQueryItem(name: param.key, value: param.value)
+            )
+        }
+        urlComponent.queryItems = queryItems
+        
+        return urlComponent.url!
+    }
+    
+    private func makeURLRequest(with request: any APIRequest) -> URLRequest {
+        let url = makeURL(with: request)
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = request.method.rawValue
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        return urlRequest
+    }
+    
+    func executeWithCompletion<T>(_ request: T, completion: @escaping (T.ResponseType?, (any Error)?) -> Void) where T: APIRequest {
+        let urlRequest = makeURLRequest(with: request)
+        URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+            if let error = error {
+                completion(nil, error)
+                return
+            }
+            guard let httpResponse = response as? HTTPURLResponse,
+                  httpResponse.statusCode >= 200,
+                  httpResponse.statusCode < 300,
+                  let data = data,
+                  let json = try? JSONDecoder().decode(T.ResponseType.self, from: data)
+            else {
+                completion(nil, URLError(.badServerResponse))
+                return
+            }
+            completion(json, nil)
+        }.resume()
     }
 }
